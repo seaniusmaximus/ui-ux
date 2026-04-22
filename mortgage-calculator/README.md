@@ -1,73 +1,96 @@
-# React + TypeScript + Vite
+# Mortgage Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React + TypeScript mortgage calculator with animated UI interactions and affordability guidance.
 
-Currently, two official plugins are available:
+## Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This example lets a user adjust key mortgage inputs and instantly see:
 
-## React Compiler
+- Estimated monthly payment
+- Payment breakdown (principal + interest, property tax, home insurance)
+- Total repayment across the full term
+- Debt-to-income ratio
+- Affordability guidance based on common budgeting thresholds
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The app uses sliders for most inputs, a term toggle for loan length, and GSAP animations for smoother UI transitions.
 
-## Expanding the ESLint configuration
+## Built With
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React
+- TypeScript
+- Vite
+- GSAP
+- HTML + CSS
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Live mortgage math** using a standard amortization formula
+- **Inputs**
+  - Home price
+  - Monthly income
+  - Monthly expenses
+  - Down payment
+  - Interest rate
+  - Loan term toggle (15 or 30 years)
+  - Property tax (annual)
+  - Home insurance (annual)
+- **Affordability status** (`affordable` or `caution`)
+- **Color feedback**
+  - Home price and monthly expenses become less favorable as values rise
+  - Down payment color changes based on closeness to a 20% target
+- **Tooltip guidance** for recommended down payment
+- **GSAP animations** on initial render and result updates
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Affordability Logic
+
+The app computes a suggested monthly housing cap as the lower of:
+
+- `28%` of monthly income, and
+- a debt-to-income constraint based on `43%` total debt ratio after existing monthly expenses
+
+Estimated monthly payment is compared against that cap to determine whether the scenario appears affordable.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+ (recommended)
+- npm
+
+### Install
+
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Run in Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm run dev
 ```
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+## Project Structure
+
+```text
+src/
+  App.tsx      # calculator UI, state, and mortgage logic
+  App.css      # component styling
+  index.css    # global styles and color variables
+```
+
+## Notes
+
+- This is an educational example and not financial advice.
+- Real lender qualification may include credit score, HOA fees, PMI, taxes/insurance differences by location, and other underwriting factors.
